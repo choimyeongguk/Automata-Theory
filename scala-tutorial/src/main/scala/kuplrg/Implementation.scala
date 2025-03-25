@@ -24,10 +24,11 @@ object Implementation extends Template {
   }
 
   def magic(x: Int): Int => Int = { // 함수를 반환하는 함수
-    (y: Int) => {
-      if (y % x != 0) (x + 1) * y + (x - y % x)
-      else y / x
-    }
+    (y: Int) =>
+      {
+        if (y % x != 0) (x + 1) * y + (x - y % x)
+        else y / x
+      }
   }
 
   def applyK(f: Int => Int, k: Int): Int => Int = {
