@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="wartremover_3.3.3-3.1.6">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/scala-3.3.3/compiler_plugins/wartremover_3.3.3-3.1.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

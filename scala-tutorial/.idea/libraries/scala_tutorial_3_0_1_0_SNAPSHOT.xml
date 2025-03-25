@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="scala-tutorial_3-0.1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/target/scala-3.3.3/scala-tutorial_3-0.1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
