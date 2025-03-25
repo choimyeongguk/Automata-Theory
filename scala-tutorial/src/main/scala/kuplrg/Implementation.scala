@@ -24,11 +24,10 @@ object Implementation extends Template {
   }
 
   def magic(x: Int): Int => Int = { // 함수를 반환하는 함수
-    (y: Int) =>
-      {
-        if (x == 0) (x + 1) * y + (x - y % x)
-        else y / x
-      }
+    (y: Int) => {
+      if (y % x != 0) (x + 1) * y + (x - y % x)
+      else y / x
+    }
   }
 
   def applyK(f: Int => Int, k: Int): Int => Int = {
@@ -46,7 +45,7 @@ object Implementation extends Template {
   def merge(l: List[Int]): List[Int] = l match {
     case Nil              => Nil
     case x :: Nil         => x :: Nil
-    case x :: y :: remain => x + y :: remain
+    case x :: y :: remain => x + y :: merge(remain)
   }
 
   def generate(init: Int, f: Int => Int, n: Int): List[Int] = n match {
@@ -88,8 +87,8 @@ object Implementation extends Template {
     case Branch(l, _, r) => {
       val lh: Int = heightOf(l)
       val rh: Int = heightOf(r)
-      if (lh > rh) lh
-      else rh
+      if (lh > rh) lh + 1
+      else rh + 1
     }
   }
 
@@ -98,8 +97,8 @@ object Implementation extends Template {
     case Branch(l, n, r) => {
       val lmin: Int = min(l)
       val rmin: Int = min(r)
-      if (n > lmin && n > rmin) n
-      else if (lmin > rmin) lmin
+      if (n < lmin && n < rmin) n
+      else if (lmin < rmin) lmin
       else rmin
     }
   }
