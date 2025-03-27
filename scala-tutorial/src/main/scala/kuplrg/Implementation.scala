@@ -8,19 +8,19 @@ object Implementation extends Template {
   // Basic Data Types
   // ---------------------------------------------------------------------------
   def isEvenPair(x: Int, y: Int): Boolean = {
-    (x + y) % 2 == 0
+    (x + y) % 2 == 0  // 굳이 return 쓰지 않아도 반환됨
   }
 
   def validString(str: String, lower: Int, upper: Int): Boolean = {
-    lower <= str.length && str.length <= upper
+    lower <= str.length && str.length <= upper  // 문자열.length 로 길이 반환
   }
 
   // ---------------------------------------------------------------------------
   // Functions
   // ---------------------------------------------------------------------------
-  def factorial(n: Int): Int = n match {
-    case 0 => 1
-    case _ => n * factorial(n - 1)
+  def factorial(n: Int): Int = n match {  // C의 switch case 문 비슷한 거
+    case 0 => 1                           // 0일 때
+    case _ => n * factorial(n - 1)        // otherwise
   }
 
   def magic(x: Int): Int => Int = { // 함수를 반환하는 함수
@@ -65,10 +65,11 @@ object Implementation extends Template {
     f: (Int, Int) => Boolean,
   ): Set[Int] = {
     (for {
-      x <- l
+      x <- l              // x, y에 대해 이중 반복문
       y <- r
       if f(x, y)
-    } yield x + y).toSet
+    } yield x + y).toSet  // 조건에 맞춰 리스트로 만든 후 중복 제거 
+//    l.flatMap(x => r.filter(y => f(x, y)).map(y => x + y)).toSet
   }
 
   // ---------------------------------------------------------------------------
@@ -85,23 +86,25 @@ object Implementation extends Template {
 
   def heightOf(t: Tree): Int = t match {
     case Leaf(_) => 0
-    case Branch(l, _, r) => {
-      val lh: Int = heightOf(l)
-      val rh: Int = heightOf(r)
-      if (lh > rh) lh + 1
-      else rh + 1
-    }
+//    case Branch(l, _, r) => {
+//      val lh: Int = heightOf(l)
+//      val rh: Int = heightOf(r)
+//      if (lh > rh) lh + 1
+//      else rh + 1
+//    }
+    case Branch(l, _, r) => 1 + math.max(heightOf(l), heightOf(r))  // 더 함수형스럽다
   }
 
   def min(t: Tree): Int = t match {
     case Leaf(n) => n
-    case Branch(l, n, r) => {
-      val lmin: Int = min(l)
-      val rmin: Int = min(r)
-      if (n < lmin && n < rmin) n
-      else if (lmin < rmin) lmin
-      else rmin
-    }
+//    case Branch(l, n, r) => {
+//      val lmin: Int = min(l)
+//      val rmin: Int = min(r)
+//      if (n < lmin && n < rmin) n
+//      else if (lmin < rmin) lmin
+//      else rmin
+//    }
+    case Branch(l, n, r) => math.min(n, math.min(min(l), min(r)))   // 더 간결하다
   }
 
   def sumLeaves(t: Tree): Int = t match {
