@@ -46,7 +46,7 @@ object Implementation extends Template {
   def merge(l: List[Int]): List[Int] = l match {
     case Nil              => Nil
     case x :: Nil         => x :: Nil
-    case x :: y :: remain => x + y :: merge(remain)
+    case x :: y :: remain => x + y :: merge(remain)   // :: 연산자는 '값::리스트' 형태를 리스트로 만들어줌
   }
 
   def generate(init: Int, f: Int => Int, n: Int): List[Int] = n match {
