@@ -122,15 +122,47 @@ object Implementation extends Template {
   )
 
   // (Problem #5) NFA for L = { w \in {0, 1}* | w contains at most three 0's }
-  def nfa_most_three_0: NFA = ???
+  def nfa_most_three_0: NFA = NFA(
+    states = Set(0, 1, 2, 3, 4),
+    symbols = Set('0', '1'),
+    trans = Map(
+      (0, '0') -> Set(1), (0, '1') -> Set(0),
+      (1, '0') -> Set(2), (1, '1') -> Set(1),
+      (2, '0') -> Set(3), (2, '1') -> Set(2),
+      (3, '0') -> Set(4), (3, '1') -> Set(3),
+    ).withDefaultValue(Set()),
+    initState = 0,
+    finalStates = Set(0, 1, 2, 3),
+  )
 
   // (Problem #6) NFA for L = { w \in {a, b}* | w does not contain
   // "bab" as a substring }
-  def nfa_not_substr_bab: NFA = ???
+  def nfa_not_substr_bab: NFA = NFA(
+    states = Set(0, 1, 2, 3),
+    symbols = Set('a', 'b'),
+    trans = Map(
+      (0, 'a') -> Set(0), (0, 'b') -> Set(1),
+      (1, 'a') -> Set(2), (1, 'b') -> Set(1),
+      (2, 'a') -> Set(0), (2, 'b') -> Set(3),
+    ).withDefaultValue(Set()),
+    initState = 0,
+    finalStates = Set(0, 1, 2),
+  )
 
   // (Problem #7) NFA for L = { w \in {a, b}* | w is any combination of "aaa"
   // and "bb" }
-  def nfa_comb_aaa_bb: NFA = ???
+  def nfa_comb_aaa_bb: NFA = NFA(
+    states = Set(0, 1, 2, 3),
+    symbols = Set('a', 'b'),
+    trans = Map(
+      (0, 'a') -> Set(1), (0, 'b') -> Set(3),
+      (1, 'a') -> Set(2),
+      (2, 'a') -> Set(0),
+      (3, 'b') -> Set(0),
+    ).withDefaultValue(Set()),
+    initState = 0,
+    finalStates = Set(0),
+  )
 
   // ---------------------------------------------------------------------------
   // epsilon-Non-deterministic Finite Automata (epsilon-NFA)
