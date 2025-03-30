@@ -17,7 +17,7 @@ object Implementation extends Template {
 
     // You can dump the DFA to see it in the automaton viewer.
     // After running this program, open `viewer/index.html` in your browser.
-    dfa_waa.dump
+    enfa_complex.dump
 
     println("--------------------------------------------------")
   }
@@ -47,7 +47,7 @@ object Implementation extends Template {
     symbols = Set('a', 'b'),
     trans = Map(
       (0, 'a') -> 1, (0, 'b') -> 3,
-      (1, 'a') -> 3, (1, 'b') -> 2, 
+      (1, 'a') -> 3, (1, 'b') -> 2,
       (2, 'a') -> 3, (2, 'b') -> 2,
       (3, 'a') -> 3, (3, 'b') -> 3,
     ),
@@ -168,9 +168,9 @@ object Implementation extends Template {
     states = Set(0, 1, 2),
     symbols = Set('a', 'b', 'c'),
     trans = Map(
-      (0, None) -> Set(1),
+      (0, None)      -> Set(1),
       (0, Some('a')) -> Set(0),
-      (1, None) -> Set(2),
+      (1, None)      -> Set(2),
       (1, Some('b')) -> Set(1),
       (2, Some('c')) -> Set(2),
     ),
