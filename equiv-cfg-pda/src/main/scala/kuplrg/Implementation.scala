@@ -30,7 +30,7 @@ object Implementation extends Template {
     // 스택 비우기용 새로운 상태 추가
     val newStart: State = Q.max + 1
     val trashCan: State = Q.max + 2   // 가장 큰 상태보다 1 큰 값. 즉 새로운 state
-    val Zp: Alphabet = "Z'"
+    val Zp: Alphabet = "Z'"           // 설마 Z'가 이미 있지는 않겠지. 그러면 반칙이지
 
     val Q_new: Set[State] = Q + newStart + trashCan
     val Gamma_new: Set[Alphabet] = Gamma + Zp

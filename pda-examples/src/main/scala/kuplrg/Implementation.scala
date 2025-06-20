@@ -219,8 +219,8 @@ object Implementation extends Template {
     alphabets = Set("Z", "X"),
     trans = Map(
       (0, Some('a'), "Z") -> Set((0, List("X", "Z")), (1, List("Z"))),
-      (0, Some('b'), "Z") -> Set((0, List("X", "Z")), (4, List("Z"))),
       (0, Some('a'), "X") -> Set((0, List("X", "X")), (1, List("X"))),
+      (0, Some('b'), "Z") -> Set((0, List("X", "Z")), (4, List("Z"))),
       (0, Some('b'), "X") -> Set((0, List("X", "X")), (4, List("X"))),
 
       (1, Some('a'), "X") -> Set((1, List())),
@@ -234,7 +234,7 @@ object Implementation extends Template {
 
       (3, Some('a'), "X") -> Set((3, List())),
       (3, Some('b'), "X") -> Set((3, List())),
-      (3, None, "Z") -> Set((7, List("Z"))),
+      (3, None, "Z") -> Set((6, List("Z"))),
 
       (4, Some('a'), "X") -> Set((4, List())),
       (4, Some('b'), "X") -> Set((4, List())),
@@ -242,44 +242,113 @@ object Implementation extends Template {
 
       (5, Some('a'), "Z") -> Set((5, List("X", "Z"))),
       (5, Some('a'), "X") -> Set((5, List("X", "X"))),
-      (5, Some('b'), "Z") -> Set((5, List("X", "Z")), (3, List("Z"))),
-      (5, Some('b'), "X") -> Set((5, List("X", "X")), (3, List("X"))),
-      ).withDefaultValue(Set()),
+      (5, Some('b'), "Z") -> Set((5, List("X", "Z")), (6, List("Z"))),
+      (5, Some('b'), "X") -> Set((5, List("X", "X")), (6, List("X"))),
+
+      (6, Some('a'), "X") -> Set((6, List())),
+      (6, Some('b'), "X") -> Set((6, List())),
+      (6, None, "Z") -> Set((7, List("Z"))),
+    ).withDefaultValue(Set()), 
     initState = 0,
     initAlphabet = "Z",
-    finalStates = Set(7),
+    finalStates = Set(7)
+//    states = Set(0, 1, 2, 3, 4, 5, 6, 7),
+//    symbols = Set('a', 'b'),
+//    alphabets = Set("Z", "X"),
+//    trans = Map(
+//      (0, Some('a'), "Z") -> Set((0, List("X", "Z")), (1, List("Z"))),
+//      (0, Some('b'), "Z") -> Set((0, List("X", "Z")), (4, List("Z"))),
+//      (0, Some('a'), "X") -> Set((0, List("X", "X")), (1, List("X"))),
+//      (0, Some('b'), "X") -> Set((0, List("X", "X")), (4, List("X"))),
+//
+//      (1, Some('a'), "X") -> Set((1, List())),
+//      (1, Some('b'), "X") -> Set((1, List())),
+//      (1, None, "Z") -> Set((2, List("Z"))),
+//
+//      (2, Some('a'), "Z") -> Set((2, List("X", "Z")), (3, List("Z"))),
+//      (2, Some('a'), "X") -> Set((2, List("X", "X")), (3, List("X"))),
+//      (2, Some('b'), "Z") -> Set((2, List("X", "Z"))),
+//      (2, Some('b'), "X") -> Set((2, List("X", "X"))),
+//
+//      (3, Some('a'), "X") -> Set((3, List())),
+//      (3, Some('b'), "X") -> Set((3, List())),
+//      (3, None, "Z") -> Set((7, List("Z"))),
+//
+//      (4, Some('a'), "X") -> Set((4, List())),
+//      (4, Some('b'), "X") -> Set((4, List())),
+//      (4, None, "Z") -> Set((5, List("Z"))),
+//
+//      (5, Some('a'), "Z") -> Set((5, List("X", "Z"))),
+//      (5, Some('a'), "X") -> Set((5, List("X", "X"))),
+//      (5, Some('b'), "Z") -> Set((5, List("X", "Z")), (3, List("Z"))),
+//      (5, Some('b'), "X") -> Set((5, List("X", "X")), (3, List("X"))),
+//      ).withDefaultValue(Set()),
+//    initState = 0,
+//    initAlphabet = "Z",
+//    finalStates = Set(7),
   )
 
   // PDA accepting L = { x$y | x, y \in {0, 1}* and N(x) + 1 = N(y^R) }
   // where N(w) is the natural number represented by w in binary
   def pda_inc_empty: PDA = PDA(
-    states = Set(-1, 0, 1, 2), symbols = Set('0', '1', '$'),
-    alphabets = Set("Z", "0", "1"),
+    states = Set(-1, 0, 1, 2),
+    symbols = Set('0', '1', '$'),
+    alphabets = Set("Z", "X", "Y"),
     trans = Map(
       (-1, Some('0'), "Z") -> Set((-1, List("Z"))),
       (-1, None, "Z") -> Set((0, List("Z"))),
-      (0, Some('1'), "Z") -> Set((0, List("1", "Z"))),
-      (0, Some('1'), "1") -> Set((0, List("1", "1"))),
-      (0, Some('1'), "0") -> Set((0, List("1", "0"))),
-      (0, Some('0'), "Z") -> Set((0, List("0", "Z"))),
-      (0, Some('0'), "1") -> Set((0, List("0", "1"))),
-      (0, Some('0'), "0") -> Set((0, List("0", "0"))),
+      
+      (0, Some('0'), "Z") -> Set((0, List("X", "Z"))),
+      (0, Some('0'), "X") -> Set((0, List("X", "X"))),
+      (0, Some('0'), "Y") -> Set((0, List("X", "Y"))),
+      (0, Some('1'), "Z") -> Set((0, List("Y", "Z"))),
+      (0, Some('1'), "X") -> Set((0, List("Y", "X"))),
+      (0, Some('1'), "Y") -> Set((0, List("Y", "Y"))),
+
       (0, Some('$'), "Z") -> Set((1, List("Z"))),
-      (0, Some('$'), "0") -> Set((1, List("0"))),
-      (0, Some('$'), "1") -> Set((1, List("1"))),
-      
-      (1, Some('0'), "1") -> Set((1, List())),
+      (0, Some('$'), "X") -> Set((1, List("X"))),
+      (0, Some('$'), "Y") -> Set((1, List("Y"))),
+
+      (1, Some('0'), "Y") -> Set((1, List())),
+
+      (1, Some('1'), "X") -> Set((2, List())),
       (1, Some('1'), "Z") -> Set((2, List("Z"))),
-      (1, Some('1'), "0") -> Set((2, List())),
-      
+
+      (2, Some('1'), "Y") -> Set((2, List())),
+      (2, Some('0'), "X") -> Set((2, List())),
       (2, Some('0'), "Z") -> Set((2, List("Z"))),
-      (2, Some('0'), "0") -> Set((2, List())),
-      (2, Some('1'), "1") -> Set((2, List())),
       (2, None, "Z") -> Set((2, List())),
     ).withDefaultValue(Set()),
     initState = -1,
     initAlphabet = "Z",
-    finalStates = Set(0, 1, 2),
+    finalStates = Set(-1, 0, 1, 2)
+//    states = Set(-1, 0, 1, 2), symbols = Set('0', '1', '$'),
+//    alphabets = Set("Z", "0", "1"),
+//    trans = Map(
+//      (-1, Some('0'), "Z") -> Set((-1, List("Z"))),
+//      (-1, None, "Z") -> Set((0, List("Z"))),
+//      (0, Some('1'), "Z") -> Set((0, List("1", "Z"))),
+//      (0, Some('1'), "1") -> Set((0, List("1", "1"))),
+//      (0, Some('1'), "0") -> Set((0, List("1", "0"))),
+//      (0, Some('0'), "Z") -> Set((0, List("0", "Z"))),
+//      (0, Some('0'), "1") -> Set((0, List("0", "1"))),
+//      (0, Some('0'), "0") -> Set((0, List("0", "0"))),
+//      (0, Some('$'), "Z") -> Set((1, List("Z"))),
+//      (0, Some('$'), "0") -> Set((1, List("0"))),
+//      (0, Some('$'), "1") -> Set((1, List("1"))),
+//
+//      (1, Some('0'), "1") -> Set((1, List())),
+//      (1, Some('1'), "Z") -> Set((2, List("Z"))),
+//      (1, Some('1'), "0") -> Set((2, List())),
+//
+//      (2, Some('0'), "Z") -> Set((2, List("Z"))),
+//      (2, Some('0'), "0") -> Set((2, List())),
+//      (2, Some('1'), "1") -> Set((2, List())),
+//      (2, None, "Z") -> Set((2, List())),
+//    ).withDefaultValue(Set()),
+//    initState = -1,
+//    initAlphabet = "Z",
+//    finalStates = Set(0, 1, 2),
   )
 
 }
